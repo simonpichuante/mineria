@@ -1,6 +1,18 @@
-import { profileData } from '../data/platformData'
+import { useEffect, useState } from 'react'
+import { fetchProfile } from '../lib/mineriaService'
 
 function PerfilPage() {
+  const [profileData, setProfileData] = useState({
+    name: 'María José Rojas',
+    role: 'Supervisora de Seguridad y Calidad',
+    unit: 'División El Teniente / Rancagua',
+    certifications: ['SST', 'Control de calidad minero', 'Liderazgo operacional', 'Auditoría interna'],
+  })
+
+  useEffect(() => {
+    fetchProfile().then(setProfileData)
+  }, [])
+
   return (
     <div className="page-stack">
       <section className="page-title-row">

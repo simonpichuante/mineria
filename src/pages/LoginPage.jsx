@@ -1,11 +1,29 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { doLogin } from '../lib/mineriaService'
 
 function LoginPage() {
   const navigate = useNavigate()
+  const [email, setEmail] = useState('maria.rojas@mineria.cl')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    navigate('/dashboard')
+    setLoading(true)
+    setError('')
+
+    const result = await doLogin(email.trim(), password)
+
+    if (result.ok && result.user) {
+      sessionStorage.setItem('mineriaCurrentUser', JSON.stringify(result.user))
+      navigate('/dashboard')
+      return
+    }
+
+    setError(result.error || 'No se pudo iniciar sesión.')
+    setLoading(false)
   }
 
   return (
@@ -45,12 +63,12 @@ function LoginPage() {
 
         <form onSubmit={handleSubmit} className="login-form">
           <label>
-            Usuario
-            <input type="text" defaultValue="mrojas" />
+            Correo institucional
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="correo@mineria.cl" />
           </label>
           <label>
             Contraseña
-            <input type="password" defaultValue="********" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
           </label>
 
           <div className="row-between">
@@ -61,7 +79,11 @@ function LoginPage() {
             <a href="#">¿Olvidaste tu clave?</a>
           </div>
 
-          <button type="submit">Ingresar al tablero</button>
+          {error ? <div className="error-banner">{error}</div> : null}
+
+          <button type="submit" disabled={loading}>
+            {loading ? 'Validando...' : 'Ingresar al tablero'}
+          </button>
         </form>
       </div>
     </div>

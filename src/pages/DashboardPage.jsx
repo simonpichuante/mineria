@@ -1,6 +1,35 @@
-import { dashboardMetrics, procedures, safetyAlerts, reports } from '../data/platformData'
+import { useEffect, useState } from 'react'
+import { dashboardMetrics as fallbackMetrics } from '../data/platformData'
+import { fetchProcedures, fetchReports, fetchSafetyAlerts } from '../lib/mineriaService'
 
 function DashboardPage() {
+  const [procedures, setProcedures] = useState([])
+  const [safetyAlerts, setSafetyAlerts] = useState([])
+  const [reports, setReports] = useState([])
+
+  const loadData = async () => {
+    const [proceduresData, alertsData, reportsData] = await Promise.all([
+      fetchProcedures(),
+      fetchSafetyAlerts(),
+      fetchReports(),
+    ])
+
+    setProcedures(proceduresData)
+    setSafetyAlerts(alertsData)
+    setReports(reportsData)
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  const dashboardMetrics = [
+    { label: 'Procedimientos vigentes', value: String(procedures.length || 4), trend: '+12% vs mes anterior', tone: 'ok' },
+    { label: 'Checklists ejecutados', value: '94%', trend: '22 pendientes', tone: 'warn' },
+    { label: 'Hallazgos de seguridad', value: String((safetyAlerts || []).length || 3).padStart(2, '0'), trend: '3 cerrados hoy', tone: 'danger' },
+    { label: 'Aprobación de calidad', value: '98.4%', trend: 'Sin desviaciones críticas', tone: 'ok' },
+  ]
+
   return (
     <div className="page-stack">
       <section className="hero-panel">
@@ -8,11 +37,11 @@ function DashboardPage() {
           <span className="eyebrow">Tablero operativo</span>
           <h1>Supervisión minera en tiempo real</h1>
         </div>
-        <button className="primary-btn">Sincronizar procedimientos</button>
+        <button className="primary-btn" onClick={loadData}>Sincronizar procedimientos</button>
       </section>
 
       <section className="metrics-grid">
-        {dashboardMetrics.map((metric) => (
+        {(dashboardMetrics.length ? dashboardMetrics : fallbackMetrics).map((metric) => (
           <article key={metric.label} className="metric-card">
             <span>{metric.label}</span>
             <strong>{metric.value}</strong>
@@ -28,7 +57,7 @@ function DashboardPage() {
             <span className="tag success">Actualizados</span>
           </div>
           <div className="list-stack">
-            {procedures.slice(0, 3).map((item) => (
+            {(procedures.length ? procedures : []).slice(0, 3).map((item) => (
               <div key={item.title} className="row-item">
                 <div>
                   <strong>{item.title}</strong>
@@ -46,7 +75,7 @@ function DashboardPage() {
             <span className="tag warning">Revisión</span>
           </div>
           <div className="alert-stack">
-            {safetyAlerts.map((alert) => (
+            {(safetyAlerts.length ? safetyAlerts : []).map((alert) => (
               <div key={alert.title} className="alert-item">
                 <span className={`severity ${alert.impact.toLowerCase()}`}>{alert.impact}</span>
                 <div>
@@ -66,7 +95,7 @@ function DashboardPage() {
           <span className="tag neutral">Reporte semanal</span>
         </div>
         <div className="reports-grid">
-          {reports.map((report) => (
+          {(reports.length ? reports : []).map((report) => (
             <div key={report.title} className="report-box">
               <span>{report.title}</span>
               <strong>{report.value}</strong>
