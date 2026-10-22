@@ -85,7 +85,7 @@ function ReportesPage() {
   const donutStyle = useMemo(() => {
     const { ok, warn, danger } = activeData.donut
     return {
-      background: `conic-gradient(#40d7a6 0 ${ok}%, #f6c76f ${ok}% ${ok + warn}%, #ff8c7a ${ok + warn}% ${ok + warn + danger}%, rgba(150, 165, 180, 0.15) ${ok + warn + danger}% 100%)`,
+      background: `conic-gradient(#ff9f43 0 ${ok}%, #f6c76f ${ok}% ${ok + warn}%, #ff8c7a ${ok + warn}% ${ok + warn + danger}%, rgba(150, 165, 180, 0.15) ${ok + warn + danger}% 100%)`,
     }
   }, [activeData])
 
