@@ -1,12 +1,12 @@
 export const navItems = [
   { label: 'Inicio', path: '/dashboard', icon: '▣' },
-  { label: 'Procedimientos', path: '/procedimientos', icon: '📘' },
-  { label: 'Checklists', path: '/checklists', icon: '✅' },
-  { label: 'Seguridad', path: '/seguridad', icon: '🛡️' },
-  { label: 'Calidad', path: '/calidad', icon: '📐' },
-  { label: 'Incidentes', path: '/incidentes', icon: '⚠️' },
-  { label: 'Reportes', path: '/reportes', icon: '📊' },
-  { label: 'Perfil', path: '/perfil', icon: '👤' },
+  { label: 'Procedimientos', path: '/procedimientos', icon: '▤' },
+  { label: 'Checklists', path: '/checklists', icon: '✓' },
+  { label: 'Seguridad', path: '/seguridad', icon: '◈' },
+  { label: 'Calidad', path: '/calidad', icon: '◬' },
+  { label: 'Incidentes', path: '/incidentes', icon: '△' },
+  { label: 'Reportes', path: '/reportes', icon: '▥' },
+  { label: 'Perfil', path: '/perfil', icon: '◉' },
 ]
 
 export const dashboardMetrics = [
