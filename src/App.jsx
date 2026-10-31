@@ -114,7 +114,7 @@ function AppShell() {
             <span className="status-badge">Sistema en línea</span>
             <div className="user-pill">
               <span className="avatar-mini">{(user.name || 'MR').slice(0, 2).toUpperCase()}</span>
-              {user.name || 'María Rojas'}
+              {user.name || 'María Teresa Cáceres'}
             </div>
           </div>
         </header>

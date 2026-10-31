@@ -3,7 +3,7 @@ import { fetchProfile } from '../lib/mineriaService'
 
 function PerfilPage() {
   const [profileData, setProfileData] = useState({
-    name: 'María José Rojas',
+    name: 'María Teresa Cáceres',
     role: 'Supervisora de Seguridad y Calidad',
     unit: 'División El Teniente / Rancagua',
     certifications: ['SST', 'Control de calidad minero', 'Liderazgo operacional', 'Auditoría interna'],

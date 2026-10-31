@@ -4,7 +4,7 @@ import { doLogin } from '../lib/mineriaService'
 
 function LoginPage() {
   const navigate = useNavigate()
-  const [email, setEmail] = useState('maria.rojas@mineria.cl')
+  const [email, setEmail] = useState('maria.caceres@codelco.cl')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -64,7 +64,7 @@ function LoginPage() {
         <form onSubmit={handleSubmit} className="login-form">
           <label>
             Correo institucional
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="correo@mineria.cl" />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="correo@teniente.cl" />
           </label>
           <label>
             Contraseña
